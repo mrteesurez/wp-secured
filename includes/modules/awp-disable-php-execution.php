@@ -1,0 +1,2 @@
+<?php
+// Existing module placeholder
