@@ -1,0 +1,260 @@
+/* assets/css/admin.css
+   Modern, responsive, card-based admin UI for WP Secured
+   Extended with modal and step/loader styles for One Click Hardening
+*/
+
+.wp-secured-admin-wrap {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 20px;
+    color: #222;
+}
+
+.wp-secured-header {
+    margin-bottom: 18px;
+}
+.wp-secured-header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+.wp-secured-header .wp-secured-subtitle {
+    margin: 4px 0 0 0;
+    color: #666;
+    font-size: 13px;
+}
+
+/* Grid layout */
+.wp-secured-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    grid-auto-rows: minmax(120px, auto);
+    gap: 18px;
+    align-items: start;
+}
+
+/* Make responsive */
+@media (max-width: 980px) {
+    .wp-secured-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Card base */
+.card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(29, 31, 41, 0.06);
+    padding: 18px;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Score card */
+.card-score .score-inner {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: space-between;
+}
+.donut {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.score-details h2 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+}
+.score-number {
+    font-size: 38px;
+    font-weight: 700;
+    margin: 2px 0;
+}
+.score-risk {
+    margin-top: 6px;
+    padding: 6px 10px;
+    border-radius: 16px;
+    display: inline-block;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* risk colors */
+.score-risk[data-risk="High Risk"], .score-risk.high { background: #d73a49; }
+.score-risk[data-risk="Medium Risk"], .score-risk.medium { background: #f39c12; }
+.score-risk[data-risk="Secure"], .score-risk.secure { background: #27ae60; }
+.score-risk[data-risk="Hardened"], .score-risk.hardened { background: #2ecc71; }
+
+.card-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.card-smalltext { margin-top: 8px; color: #666; font-size: 12px; }
+
+/* Breakdown */
+.card-breakdown .breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.breakdown-item {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px;
+    border-radius:6px;
+    color:#fff;
+    font-weight:700;
+}
+.breakdown-item.critical { background:#d73a49; }
+.breakdown-item.high { background:#e67e22; }
+.breakdown-item.medium { background:#f1c40f; color:#111; }
+.breakdown-item.low { background:#2ecc71; }
+
+.breakdown-list { margin-top: 8px; max-height:240px; overflow:auto; }
+.breakdown-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 6px;
+    border-bottom:1px solid rgba(0,0,0,0.03);
+}
+.breakdown-row .badge { width:12px;height:12px;border-radius:3px;margin-right:8px;display:inline-block; }
+.breakdown-row .points { color:#666; margin-left:10px; font-size:13px; }
+.breakdown-row .state.on { color:#2ecc71; font-weight:700; }
+.breakdown-row .state.off { color:#999; }
+
+/* Protected Features list */
+.protected-list { display:flex; flex-direction:column; gap:8px; max-height:420px; overflow:auto; }
+.protected-item {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    border-radius:6px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(250,250,250,0.5));
+}
+.protected-left { max-width:75%; }
+.protected-label { font-weight:700; display:block; }
+.protected-desc { color:#666; font-size:13px; margin-top:4px; }
+.protected-right .state.on { color:#2ecc71; font-weight:700; }
+.protected-right .state.off { color:#999; }
+
+/* Comparison widget */
+.card-compare .compare-inner { display:flex; gap:12px; align-items:stretch; }
+.compare-col { flex:1; }
+.compare-card {
+    text-align:center;
+    padding:12px;
+    border-radius:8px;
+    background:#fafafa;
+}
+.compare-card .big { font-size:28px; font-weight:700; margin-top:8px; }
+.compare-card .small { color:#666; margin-top:6px; font-size:13px; }
+
+/* Tooltips (simple) */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    top: calc(100% + 8px);
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    z-index: 99999;
+    font-size: 12px;
+}
+
+/* Modal for One Click Hardening progress */
+.wp-secured-modal-backdrop {
+    position: fixed;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(9, 11, 14, 0.5);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+}
+.wp-secured-modal {
+    width: 100%;
+    max-width: 920px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(10, 12, 16, 0.3);
+    padding: 20px;
+}
+.wp-secured-modal h2 { margin-top:0; font-size:18px; }
+.wp-secured-steps {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 12px;
+    margin-top: 10px;
+}
+@media (max-width: 900px) {
+    .wp-secured-steps { grid-template-columns: 1fr; }
+}
+.wp-secured-step-list {
+    max-height: 420px;
+    overflow: auto;
+    padding-right: 6px;
+}
+.wp-secured-step {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px;
+    border-radius:6px;
+    border:1px solid rgba(0,0,0,0.04);
+    margin-bottom: 8px;
+}
+.step-left { display:flex; gap:10px; align-items:center; }
+.step-label { font-weight:700; }
+.step-desc { color:#666; font-size:12px; }
+.step-state { min-width:96px; text-align:right; }
+
+.wp-secured-spinner {
+    width:18px; height:18px; border-radius:50%;
+    border:2px solid rgba(0,0,0,0.06); border-top-color:#1e73be; animation: spin 900ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.step-state.success { color:#2ecc71; font-weight:700; }
+.step-state.failed { color:#d73a49; font-weight:700; }
+.step-state.pending { color:#999; font-weight:600; }
+
+/* Log area */
+.wp-secured-log {
+    background:#fafafa;
+    border-radius:6px;
+    padding:8px;
+    height: 200px;
+    overflow:auto;
+    border:1px solid rgba(0,0,0,0.03);
+    font-family: monospace;
+    font-size:13px;
+}
+
+/* final success panel */
+.wp-secured-final {
+    text-align:center;
+    padding:12px;
+    margin-top:10px;
+}
+.wp-secured-final .big { font-size:34px; font-weight:800; }
+.wp-secured-final .delta { color:#27ae60; font-weight:700; }
+
+/* small utilities */
+.button { cursor:pointer; }
